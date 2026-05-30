@@ -1,0 +1,926 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>W stone | Jewelry with stones</title>
+  <style>
+    :root {
+      --ink: #171717;
+      --muted: #707070;
+      --line: #dedbd5;
+      --paper: #f7f5f0;
+      --white: #ffffff;
+      --warm: #c8b58a;
+      --stone: #9aa09d;
+      --deep: #2f3632;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .top-note {
+      min-height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 16px;
+      background: var(--deep);
+      color: var(--white);
+      font-size: 12px;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 18px;
+      min-height: 66px;
+      padding: 0 28px;
+      background: transparent;
+    }
+
+    .nav-left,
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-size: 13px;
+    }
+
+    .nav-right {
+      justify-content: flex-end;
+    }
+
+    .brand {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    .brand span {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      margin-left: 8px;
+      color: var(--muted);
+      vertical-align: middle;
+    }
+
+    .icon-button {
+      border: 0;
+      background: transparent;
+      padding: 6px;
+      cursor: pointer;
+      color: var(--ink);
+    }
+
+    .hero {
+      min-height: calc(100vh - 100px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      padding: 64px 7vw 72px;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 680px;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(48px, 7vw, 112px);
+      line-height: 0.92;
+      font-weight: 400;
+    }
+
+    .hero-copy p:not(.eyebrow) {
+      max-width: 500px;
+      margin: 28px 0 34px;
+      color: #373737;
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 18px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--white);
+      cursor: pointer;
+    }
+
+    .btn.secondary {
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .hero-media {
+      position: relative;
+      min-height: 560px;
+      overflow: hidden;
+      background: #d9d4c9;
+    }
+
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      filter: saturate(0.82) contrast(1.02);
+    }
+
+    .hero-caption {
+      position: absolute;
+      left: 24px;
+      bottom: 22px;
+      color: var(--white);
+      font-size: 13px;
+      text-shadow: 0 1px 18px rgba(0, 0, 0, 0.35);
+    }
+
+    .shop-shell {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .filters {
+      position: sticky;
+      top: 101px;
+      align-self: start;
+      min-height: calc(100vh - 101px);
+      padding: 30px 24px;
+      border-right: 1px solid var(--line);
+      background: #f2efe8;
+    }
+
+    .filters h2,
+    .section-title h2,
+    .journal h2,
+    .newsletter h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 34px;
+      font-weight: 400;
+    }
+
+    .filter-group {
+      margin-top: 28px;
+      border-top: 1px solid var(--line);
+      padding-top: 20px;
+    }
+
+    .filter-group label {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .filter-group select {
+      width: 100%;
+      min-height: 38px;
+      border: 1px solid var(--line);
+      background: var(--white);
+      padding: 0 10px;
+      border-radius: 0;
+    }
+
+    .category-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .category-list button {
+      display: flex;
+      justify-content: space-between;
+      border: 0;
+      border-bottom: 1px solid transparent;
+      background: transparent;
+      padding: 0 0 5px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .category-list button.active {
+      border-color: var(--ink);
+    }
+
+    .shop-main {
+      padding: 30px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 26px;
+    }
+
+    .section-title p {
+      max-width: 430px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .product-card {
+      min-width: 0;
+      background: var(--paper);
+    }
+
+    .product-image {
+      position: relative;
+      aspect-ratio: 1 / 1.18;
+      background: #e8e4dc;
+      overflow: hidden;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      mix-blend-mode: multiply;
+      transform: scale(1.02);
+      transition: transform 280ms ease;
+    }
+
+    .product-card:hover img {
+      transform: scale(1.06);
+    }
+
+    .wish {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 34px;
+      height: 34px;
+      border: 1px solid rgba(23, 23, 23, 0.22);
+      background: rgba(247, 245, 240, 0.78);
+      cursor: pointer;
+    }
+
+    .product-info {
+      display: grid;
+      gap: 7px;
+      min-height: 126px;
+      padding: 15px;
+      font-size: 14px;
+    }
+
+    .product-info strong {
+      font-weight: 500;
+    }
+
+    .product-meta {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .product-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: auto;
+    }
+
+    .add {
+      border: 0;
+      border-bottom: 1px solid transparent;
+      background: transparent;
+      padding: 0;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .add:hover,
+    .add:focus-visible {
+      border-bottom-color: var(--ink);
+    }
+
+    .collections {
+      padding: 54px 30px 64px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .collections .section-title {
+      padding: 0;
+    }
+
+    .collection-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 52px 22px;
+      margin-top: 28px;
+    }
+
+    .collection-panel {
+      display: block;
+    }
+
+    .collection-panel img {
+      width: 100%;
+      aspect-ratio: 1 / 1.18;
+      display: block;
+      object-fit: cover;
+      filter: saturate(0.78);
+      background: #d8d4ca;
+    }
+
+    .collection-panel div {
+      padding-top: 14px;
+      color: var(--ink);
+      text-shadow: none;
+    }
+
+    .collection-panel h3 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(28px, 3.4vw, 52px);
+      line-height: 1;
+      font-weight: 400;
+    }
+
+    .journal {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 52px;
+      padding: 64px 7vw;
+      border-bottom: 1px solid var(--line);
+      background: var(--white);
+    }
+
+    .journal p {
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .journal img {
+      width: 100%;
+      aspect-ratio: 1.35 / 1;
+      object-fit: cover;
+      filter: saturate(0.74);
+    }
+
+    .newsletter {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: center;
+      padding: 50px 30px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .newsletter form {
+      display: flex;
+      gap: 10px;
+    }
+
+    .newsletter input {
+      min-width: 0;
+      flex: 1;
+      min-height: 44px;
+      border: 1px solid var(--line);
+      background: var(--white);
+      padding: 0 12px;
+    }
+
+    .site-footer {
+      display: grid;
+      grid-template-columns: 1.2fr repeat(3, 1fr);
+      gap: 26px;
+      padding: 38px 30px 46px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .site-footer strong {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .site-footer a {
+      display: block;
+      margin-top: 8px;
+    }
+
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 50;
+      width: min(420px, 100vw);
+      height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      background: var(--paper);
+      border-left: 1px solid var(--line);
+      transform: translateX(100%);
+      transition: transform 240ms ease;
+      box-shadow: -30px 0 60px rgba(0, 0, 0, 0.12);
+    }
+
+    .cart-drawer.open {
+      transform: translateX(0);
+    }
+
+    .cart-head,
+    .cart-foot {
+      padding: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .cart-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-body {
+      overflow: auto;
+      padding: 20px;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 74px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .cart-item img {
+      width: 74px;
+      height: 88px;
+      object-fit: cover;
+      background: #e8e4dc;
+    }
+
+    .cart-item p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .cart-foot {
+      border-top: 1px solid var(--line);
+      border-bottom: 0;
+    }
+
+    .subtotal {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    @media (max-width: 1050px) {
+      .product-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 820px) {
+      .top-note {
+        font-size: 11px;
+      }
+
+      .site-header {
+        grid-template-columns: auto 1fr auto;
+        padding: 0 16px;
+      }
+
+      .nav-left a,
+      .nav-right a,
+      .brand span {
+        display: none;
+      }
+
+      .brand {
+        justify-self: center;
+        font-size: 24px;
+      }
+
+      .hero,
+      .journal,
+      .newsletter,
+      .site-footer {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy {
+        min-height: 55vh;
+        padding: 48px 20px;
+      }
+
+      .hero-media {
+        min-height: 420px;
+      }
+
+      .shop-main,
+      .collections {
+        padding: 24px 16px;
+      }
+
+      .section-title {
+        display: block;
+      }
+
+      .section-title p {
+        margin-top: 12px;
+      }
+
+      .product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .collection-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .collection-grid {
+        gap: 34px;
+      }
+
+      .journal,
+      .newsletter,
+      .site-footer {
+        padding: 38px 16px;
+      }
+
+      .newsletter form {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 48px;
+      }
+
+      .hero-actions,
+      .product-row {
+        align-items: stretch;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-note">Taxes included / Complimentary delivery on orders over ¥30,000</div>
+
+  <header class="site-header">
+    <nav class="nav-left" aria-label="Primary navigation">
+      <button class="icon-button" aria-label="メニュー">☰</button>
+      <a href="W_STONE_SHOP.html">Shop</a>
+    </nav>
+    <a class="brand" href="#">W stone</a>
+    <nav class="nav-right" aria-label="Utility navigation">
+      <a href="#">JP/JPY</a>
+      <a href="#">Wishlist</a>
+      <button class="icon-button" id="openCart" aria-label="カートを開く">Cart <span id="cartCount">0</span></button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">New collection / Quiet brilliance</p>
+        <h1>Jewelry with stones.</h1>
+        <p>W stoneは、天然石の静かな表情を日常に添えるジュエリーブランド。凛としたフォルム、肌になじむ余白、長く身につけられる質感を大切にしています。</p>
+        <div class="hero-actions">
+        <a class="btn" href="W_STONE_SHOP.html">新作を見る</a>
+          <a class="btn secondary" href="#collections">コレクション</a>
+        </div>
+      </div>
+      <div class="hero-media">
+        <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1400&q=85" alt="Silver rings with gemstones">
+        <div class="hero-caption">Stones for every day, crafted in quiet forms.</div>
+      </div>
+    </section>
+
+    <section class="shop-shell" id="shop">
+      <div class="shop-main">
+        <div class="section-title">
+          <h2>New arrivals</h2>
+        </div>
+        <div class="product-grid" id="productGrid"></div>
+      </div>
+    </section>
+
+    <section class="collections" id="collections">
+      <div class="section-title">
+        <h2>Collections</h2>
+      </div>
+      <div class="collection-grid">
+        <a class="collection-panel" href="W_STONE_SHOP.html?category=Rings">
+          <img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=1400&q=85" alt="Minimal gemstone rings">
+          <div>
+            <h3>Rings</h3>
+          </div>
+        </a>
+        <a class="collection-panel" href="W_STONE_SHOP.html?category=Necklaces">
+          <img src="https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?auto=format&fit=crop&w=1100&q=85" alt="Jewelry stones on a table">
+          <div>
+            <h3>Necklaces</h3>
+          </div>
+        </a>
+        <a class="collection-panel" href="W_STONE_SHOP.html?category=Earrings">
+          <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1400&q=85" alt="Gemstone earrings">
+          <div>
+            <h3>Earrings</h3>
+          </div>
+        </a>
+        <a class="collection-panel" href="W_STONE_SHOP.html?category=Bracelets">
+          <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1400&q=85" alt="Silver bracelet and jewelry">
+          <div>
+            <h3>Bracelets</h3>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="journal" id="journal">
+      <div>
+        <p class="eyebrow">Journal / Craft note</p>
+        <h2>石と共にある時間</h2>
+        <p>W stoneでは、石を装飾としてだけでなく、記憶や気配を宿すものとして扱います。シンプルな形の中に、色の揺らぎや光の重なりが残るよう、素材選びと仕上げを整えています。</p>
+        <a class="btn secondary" href="#">Read more</a>
+      </div>
+      <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1300&q=85" alt="Jewelry craft close up">
+    </section>
+
+    <section class="newsletter">
+      <div>
+        <h2>Stay with stones</h2>
+        <p>新作、再入荷、限定ストーンの案内をメールで受け取る。</p>
+      </div>
+      <form>
+        <input type="email" placeholder="Email" aria-label="Email">
+        <button class="btn" type="submit">Sign up</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <strong>W stone</strong>
+      <span>with stones / 宝石と共に</span>
+    </div>
+    <div>
+      <strong>Shop</strong>
+      <a href="#shop">New arrivals</a>
+      <a href="#shop">Rings</a>
+      <a href="#shop">Necklaces</a>
+    </div>
+    <div>
+      <strong>Service</strong>
+      <a href="#">Shipping</a>
+      <a href="#">Returns</a>
+      <a href="#">Ring size guide</a>
+    </div>
+    <div>
+      <strong>Social</strong>
+      <a href="#">Instagram</a>
+      <a href="#">Pinterest</a>
+      <a href="#">Contact</a>
+    </div>
+  </footer>
+
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Cart">
+    <div class="cart-head">
+      <strong>Your cart</strong>
+      <button class="icon-button" id="closeCart" aria-label="カートを閉じる">×</button>
+    </div>
+    <div class="cart-body" id="cartBody">
+      <p>カートは空です。</p>
+    </div>
+    <div class="cart-foot">
+      <div class="subtotal">
+        <span>Subtotal</span>
+        <strong id="subtotal">¥0</strong>
+      </div>
+      <button class="btn" style="width: 100%;">Checkout</button>
+    </div>
+  </aside>
+
+  <script>
+    const products = [
+      {
+        name: "Lumen Signet Ring",
+        category: "Rings",
+        material: "Sterling silver",
+        stone: "Clear quartz",
+        price: 42000,
+        image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=900&q=85"
+      },
+      {
+        name: "Mica Oval Ring",
+        category: "Rings",
+        material: "Gold vermeil",
+        stone: "Moonstone",
+        price: 52000,
+        image: "https://images.unsplash.com/photo-1603561596112-db1d9768c0bc?auto=format&fit=crop&w=900&q=85"
+      },
+      {
+        name: "Deep Moss Ring",
+        category: "Rings",
+        material: "Sterling silver",
+        stone: "Green agate",
+        price: 48000,
+        image: "https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?auto=format&fit=crop&w=900&q=85"
+      },
+      {
+        name: "Trace Stone Necklace",
+        category: "Necklaces",
+        material: "White gold",
+        stone: "White sapphire",
+        price: 68000,
+        image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=900&q=85"
+      },
+      {
+        name: "Small Orbit Necklace",
+        category: "Necklaces",
+        material: "Gold vermeil",
+        stone: "Smoky quartz",
+        price: 39000,
+        image: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=900&q=85"
+      },
+      {
+        name: "Still Drop Earrings",
+        category: "Earrings",
+        material: "Sterling silver",
+        stone: "Blue topaz",
+        price: 36000,
+        image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=900&q=85"
+      },
+      {
+        name: "Pearl Stone Ear Cuff",
+        category: "Earrings",
+        material: "Gold vermeil",
+        stone: "Freshwater pearl",
+        price: 28000,
+        image: "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=900&q=85"
+      },
+      {
+        name: "Column Bracelet",
+        category: "Bracelets",
+        material: "Sterling silver",
+        stone: "Onyx",
+        price: 44000,
+        image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=900&q=85"
+      }
+    ];
+
+    const state = {
+      cart: []
+    };
+
+    const yen = new Intl.NumberFormat("ja-JP", {
+      style: "currency",
+      currency: "JPY",
+      maximumFractionDigits: 0
+    });
+
+    const productGrid = document.getElementById("productGrid");
+    const cartDrawer = document.getElementById("cartDrawer");
+    const cartBody = document.getElementById("cartBody");
+    const cartCount = document.getElementById("cartCount");
+    const subtotal = document.getElementById("subtotal");
+
+    function renderProducts() {
+      productGrid.innerHTML = products.map((product, index) => `
+        <article class="product-card">
+          <div class="product-image">
+            <img src="${product.image}" alt="${product.name}">
+            <button class="wish" aria-label="${product.name}をウィッシュリストに追加">♡</button>
+          </div>
+          <div class="product-info">
+            <strong>${product.name}</strong>
+            <span class="product-meta">${product.category} / ${product.material} / ${product.stone}</span>
+            <div class="product-row">
+              <span>${yen.format(product.price)}</span>
+              <button class="add" data-index="${products.indexOf(product)}">Add to cart</button>
+            </div>
+          </div>
+        </article>
+      `).join("");
+
+      document.querySelectorAll(".add").forEach((button) => {
+        button.addEventListener("click", () => addToCart(products[Number(button.dataset.index)]));
+      });
+    }
+
+    function addToCart(product) {
+      state.cart.push(product);
+      renderCart();
+      cartDrawer.classList.add("open");
+    }
+
+    function renderCart() {
+      cartCount.textContent = state.cart.length;
+      const total = state.cart.reduce((sum, product) => sum + product.price, 0);
+      subtotal.textContent = yen.format(total);
+
+      if (!state.cart.length) {
+        cartBody.innerHTML = "<p>カートは空です。</p>";
+        return;
+      }
+
+      cartBody.innerHTML = state.cart.map((product) => `
+        <div class="cart-item">
+          <img src="${product.image}" alt="${product.name}">
+          <div>
+            <strong>${product.name}</strong>
+            <p>${product.stone}</p>
+          </div>
+          <span>${yen.format(product.price)}</span>
+        </div>
+      `).join("");
+    }
+
+    document.getElementById("openCart").addEventListener("click", () => {
+      cartDrawer.classList.add("open");
+    });
+
+    document.getElementById("closeCart").addEventListener("click", () => {
+      cartDrawer.classList.remove("open");
+    });
+
+    document.querySelector(".newsletter form").addEventListener("submit", (event) => {
+      event.preventDefault();
+      event.currentTarget.reset();
+      alert("ご登録ありがとうございます。");
+    });
+
+    renderProducts();
+  </script>
+</body>
+</html>
