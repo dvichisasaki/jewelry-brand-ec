@@ -112,7 +112,7 @@ function ProductGrid({ items, addToCart }) {
   );
 }
 
-function CartDrawer({ cart, open, close, go }) {
+function CartDrawer({ cart, open, close, go, removeFromCart }) {
   const total = cart.reduce((sum, product) => sum + product.price, 0);
   return (
     <aside className={`fixed right-0 top-0 z-50 grid h-screen w-full max-w-[420px] grid-rows-[auto_1fr_auto] border-l border-line bg-paper transition-transform duration-300 ${open ? "translate-x-0" : "translate-x-full"}`}>
@@ -129,7 +129,16 @@ function CartDrawer({ cart, open, close, go }) {
               <strong className="text-sm">{product.name}</strong>
               <p className="mt-1 text-xs text-muted">{product.stone}</p>
             </div>
-            <span className="text-sm">{yen.format(product.price)}</span>
+            <div className="flex items-center gap-3">
+              <span className="text-sm">{yen.format(product.price)}</span>
+              <button
+                className="grid h-7 w-7 place-items-center text-xl leading-none text-muted hover:text-ink"
+                onClick={() => removeFromCart(index)}
+                aria-label={`${product.name}をカートから削除`}
+              >
+                ×
+              </button>
+            </div>
           </div>
         ))}
       </div>
@@ -363,6 +372,9 @@ function App() {
     setCart((current) => [...current, product]);
     setCartOpen(true);
   };
+  const removeFromCart = (targetIndex) => {
+    setCart((current) => current.filter((_, index) => index !== targetIndex));
+  };
 
   if (page === "checkout") return <Checkout />;
 
@@ -371,7 +383,7 @@ function App() {
       <Header cartCount={cart.length} openCart={() => setCartOpen(true)} />
       {page === "shop" ? <Shop addToCart={addToCart} /> : <Home addToCart={addToCart} />}
       <Footer />
-      <CartDrawer cart={cart} open={cartOpen} close={() => setCartOpen(false)} go={go} />
+      <CartDrawer cart={cart} open={cartOpen} close={() => setCartOpen(false)} go={go} removeFromCart={removeFromCart} />
     </div>
   );
 }
