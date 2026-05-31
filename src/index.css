@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply m-0 bg-paper font-sans text-ink;
+  }
+
+  button,
+  input {
+    font: inherit;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex min-h-11 items-center justify-center border border-ink bg-ink px-5 text-white;
+  }
+
+  .btn-secondary {
+    @apply inline-flex min-h-11 items-center justify-center border border-ink bg-transparent px-5 text-ink;
+  }
+
+  .filter-button {
+    @apply inline-flex min-h-[46px] items-center gap-4 border border-line bg-white px-3 text-sm hover:border-ink focus-visible:border-ink;
+  }
+}
