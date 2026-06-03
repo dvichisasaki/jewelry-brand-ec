@@ -10,7 +10,7 @@ const yen = new Intl.NumberFormat("ja-JP", {
 
 const products = [
   ["Lumen Signet Ring", "Rings", "Sterling silver", "Clear quartz", 42000, "52 54 56 58 60", "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=900&q=85", "New"],
-  ["Mica Oval Ring", "Rings", "Gold vermeil", "Moonstone", 52000, "50 52 54 56 58", "https://images.unsplash.com/photo-1603561596112-db1d9768c0bc?auto=format&fit=crop&w=900&q=85", ""],
+  ["Mica Oval Ring", "Rings", "Gold vermeil", "Moonstone", 52000, "50 52 54 56 58", "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=900&q=85", ""],
   ["Deep Moss Ring", "Rings", "Sterling silver", "Green agate", 48000, "54 56 58 60 62", "https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?auto=format&fit=crop&w=900&q=85", ""],
   ["Column Ring Slim", "Rings", "White gold", "White sapphire", 64000, "48 50 52 54 56", "https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=900&q=85", "New"],
   ["Trace Stone Necklace", "Necklaces", "White gold", "White sapphire", 68000, "16 inches 18 inches 20.5 inches", "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=900&q=85", ""],
